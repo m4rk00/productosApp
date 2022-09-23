@@ -14,7 +14,10 @@ class HomePage extends StatelessWidget {
       body: ListView.builder(
         itemCount: 10,
         itemBuilder: (BuildContext context, int index) =>
-          ProductoCard(),
+          GestureDetector(
+            onTap: () => Navigator.pushNamed(context, 'producto'),
+            child: ProductoCard()
+          ),
         ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),

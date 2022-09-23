@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:productos_app/pages/home_page.dart';
 import 'package:productos_app/pages/login_page.dart';
+import 'package:productos_app/pages/producto_page.dart';
 
 void main() => runApp(const MyApp());
 
@@ -16,7 +17,8 @@ class MyApp extends StatelessWidget {
       initialRoute: 'home',
       routes: {
         'login' : (_) => LoginPage(),
-        'home' : (_) => HomePage()
+        'home' : (_) => HomePage(),
+        'producto' : (_) => ProductoPage()
       },
       theme: ThemeData.light().copyWith(
         scaffoldBackgroundColor: Colors.grey[300],
