@@ -23,6 +23,20 @@ class ImagenProducto extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
+        decoration: BoxDecoration(
+          color: Colors.black,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(45),
+            topRight: Radius.circular(45),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 10,
+              offset: Offset(0,5),
+            )
+          ],
+        ),
       ),
     );
   }

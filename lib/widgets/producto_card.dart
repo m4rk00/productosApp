@@ -1,7 +1,12 @@
-
+import 'dart:ffi';
 import 'package:flutter/material.dart';
+import 'package:productos_app/models/producto.dart';
 
 class ProductoCard extends StatelessWidget {
+
+  final Producto producto;
+
+  const ProductoCard({Key? key, required this.producto}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +31,19 @@ class ProductoCard extends StatelessWidget {
         child: Stack(
           alignment: Alignment.bottomLeft,
           children: [
-            _BackgroundImage(),
-            _DetallesProducto(),
+            _BackgroundImage(producto.imagen),
+            _DetallesProducto(
+              nombre: producto.nombre,
+              id: producto.id!,
+            ),
             Positioned(
               top:0,
               right: 0,
-              child: _Precio(),
+              child: _Precio(
+                precio: producto.precio,
+              ),
             ),
+            if(!producto.disponible)
             Positioned(
               top: 0,
               left: 0,
@@ -47,6 +58,9 @@ class ProductoCard extends StatelessWidget {
 
 class _BackgroundImage extends StatelessWidget {
 
+  final String? url;
+  const _BackgroundImage (this.url);
+
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
@@ -54,10 +68,16 @@ class _BackgroundImage extends StatelessWidget {
       child: Container(
         width: double.infinity,
         height: 400,
-        child: FadeInImage(
-          placeholder: AssetImage('assets/jar-loading.gif'),
-          //image: NetworkImage('https://via.placeholder.com/400x300/f6f6f6'),
+        child:
+        url == null 
+        ? Image(
           image: AssetImage('assets/no-image.png'),
+          fit: BoxFit.cover,
+        )
+        : FadeInImage(
+          placeholder: AssetImage('assets/jar-loading.gif'),
+          image: NetworkImage(url!),
+          //image: AssetImage('assets/no-image.png'),
           fit: BoxFit.cover,
         ),
       ),
@@ -66,6 +86,11 @@ class _BackgroundImage extends StatelessWidget {
 }
 
 class _DetallesProducto extends StatelessWidget {
+
+  final String nombre;
+  final String id;
+
+  const _DetallesProducto({super.key, required this.nombre, required this.id});
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +107,7 @@ class _DetallesProducto extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Nombre del producto',
+              nombre,
               style: TextStyle(
                 fontSize: 20,
                 color: Colors.white,
@@ -92,7 +117,7 @@ class _DetallesProducto extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
             Text(
-              'ID del Producto',
+              id,
               style: TextStyle(
                 fontSize: 15,
                 color: Colors.white,
@@ -114,6 +139,11 @@ class _DetallesProducto extends StatelessWidget {
 
 class _Precio extends StatelessWidget {
 
+  final precio;
+
+  const _Precio({this.precio});
+
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -133,7 +163,7 @@ class _Precio extends StatelessWidget {
             horizontal: 10
           ),
           child: Text(
-            '\$99.99',
+            '\$$precio',
             style: TextStyle(
               color: Colors.white,
               fontSize: 20,
